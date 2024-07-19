@@ -35,7 +35,7 @@ const lightTheme: Theme = {
 };
 
 const darkTheme: Theme = {
-  background: "#333",
+  background: "#27296d",
   color: "#f9f9f9",
   cardBackground: "#444",
   cardHover: "#555",
@@ -79,7 +79,7 @@ const Title = styled.h1`
 `;
 
 const QuizTitle = styled.span`
-  color: ${(props) => props.theme.buttonBackground};
+  color: #9d53c3};
   font-weight: bold;
 `;
 
@@ -113,7 +113,7 @@ const Card = styled.button<AppProps>`
   flex: 1;
 
   &:hover {
-    background-color: ${(props) => props.theme.cardHover};
+    background-color: #9d53c3};
   }
 `;
 
@@ -121,7 +121,7 @@ const ThemeToggle = styled.div<AppProps>`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${(props) => props.theme.buttonBackground};
+  background-color: #9d53c3;
   color: white;
   padding: 5px 10px;
   margin-top: 20px;
@@ -149,7 +149,7 @@ interface QuizData {
 
 const Frontend: React.FC = () => {
   const [selectedQuiz, setSelectedQuiz] = useState<QuizData | null>(null);
-  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [theme, setTheme] = useState<"light" | "dark">("dark");
 
   const handleQuizSelect = (quizIndex: number) => {
     setSelectedQuiz(data.quizzes[quizIndex]);
