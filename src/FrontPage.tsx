@@ -1,10 +1,16 @@
 import React, { useState } from "react";
 import styled, { ThemeProvider, DefaultTheme } from "styled-components";
-import { FaSun, FaMoon } from "react-icons/fa";
+import {
+  FaSun,
+  FaMoon,
+  FaHtml5,
+  FaCss3Alt,
+  FaJsSquare,
+  FaUniversalAccess,
+} from "react-icons/fa";
 import Quiz from "./components/Quiz";
 import data from "./data.json";
 
-// Define the type for the theme
 interface Theme {
   background: string;
   color: string;
@@ -23,6 +29,7 @@ interface Question {
 interface QuizData {
   title: string;
   questions: Question[];
+  icon: string;
 }
 
 const lightTheme: Theme = {
@@ -43,7 +50,6 @@ const darkTheme: Theme = {
   buttonHover: "#0056b3",
 };
 
-// Define the types for the props
 interface AppProps {
   theme: DefaultTheme;
 }
@@ -79,7 +85,7 @@ const Title = styled.h1`
 `;
 
 const QuizTitle = styled.span`
-  color: #9d53c3};
+  color: #9d53c3;
   font-weight: bold;
 `;
 
@@ -113,7 +119,7 @@ const Card = styled.button<AppProps>`
   flex: 1;
 
   &:hover {
-    background-color: #9d53c3};
+    background-color: ${(props) => props.theme.cardHover};
   }
 `;
 
@@ -143,10 +149,6 @@ const MainContent = styled.div`
   justify-content: center;
 `;
 
-interface QuizData {
-  title: string;
-}
-
 const Frontend: React.FC = () => {
   const [selectedQuiz, setSelectedQuiz] = useState<QuizData | null>(null);
   const [theme, setTheme] = useState<"light" | "dark">("dark");
@@ -161,6 +163,21 @@ const Frontend: React.FC = () => {
 
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === "dark" ? "light" : "dark"));
+  };
+
+  const getIcon = (title: string) => {
+    switch (title) {
+      case "HTML":
+        return <FaHtml5 />;
+      case "CSS":
+        return <FaCss3Alt />;
+      case "JavaScript":
+        return <FaJsSquare />;
+      case "Accessibility":
+        return <FaUniversalAccess />;
+      default:
+        return null;
+    }
   };
 
   return (
@@ -194,8 +211,14 @@ const Frontend: React.FC = () => {
                     key={index}
                     onClick={() => handleQuizSelect(index)}
                     theme={theme === "dark" ? darkTheme : lightTheme}
+                    style={{
+                      color: "#9d53c3",
+                      fontSize: "20px ",
+                      fontWeight: "bold",
+                    }}
                   >
-                    {quiz.title}
+                    {getIcon(quiz.title)}
+                    <span style={{ marginLeft: "10px" }}>{quiz.title}</span>
                   </Card>
                 ))}
               </Cards>
