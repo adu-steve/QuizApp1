@@ -51,16 +51,17 @@ const OptionButton = styled.button<{
   border-radius: 5px;
   transition: border 0.3s, background-color 0.3s;
   background-color: ${(props) =>
-    props.highlighted ? "#e0e0e0" : props.selected ? "#d6d6d6" : "white"};
+    props.highlighted ? "#e0e0e0" : props.selected ? "#9d53c3" : "white"};
   border: ${(props) =>
     props.correct
-      ? "2px solid #28a745"
+      ? "4px solid #28a745"
       : props.wrong
-      ? "2px solid #dc3545"
+      ? "4px solid #dc3545"
       : "1px solid #ddd"};
 
   &:hover {
-    background-color: #f0f0f0;
+    background-color: #9d53c3;
+    border: 4px solid #9d53c3;
   }
 `;
 
@@ -72,14 +73,14 @@ const CorrectAnswerText = styled.p`
 
 const ErrorMessage = styled.p`
   margin-top: 10px;
-  color: #dc3545;
+  color: #9d53c3;
   font-weight: bold;
 `;
 
 const SubmitButton = styled.button`
   margin-top: 20px;
   padding: 10px 20px;
-  background-color: #007bff;
+  background-color: #9d53c3;
   color: white;
   border: none;
   cursor: pointer;
@@ -100,6 +101,8 @@ const QuizCompleted = styled.div`
 const QuestionNumber = styled.div`
   margin-bottom: 10px;
   font-size: 14px;
+  color: #9d53c3;
+  font bold
 `;
 
 const ReturnButton = styled.button`
@@ -113,7 +116,7 @@ const ReturnButton = styled.button`
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: #218838;
+    background-color: #9d53c3;
   }
 `;
 
@@ -216,13 +219,13 @@ const Quiz: React.FC<QuizProps> = ({ quiz, theme, onReturn }) => {
               Next Question
             </SubmitButton>
           ) : (
-            <SubmitButton onClick={handleSubmit}>Submit</SubmitButton>
+            <SubmitButton onClick={handleSubmit}>Submit Answer</SubmitButton>
           )}
         </QuestionContainer>
       ) : (
         <QuizCompleted>
           <h3>You've completed the quiz!</h3>
-          <p>
+          <p style={{ color: "#9d53c3" }}>
             Your score: {score} out of {quiz.questions.length}
           </p>
           <ReturnButton onClick={onReturn}>Return to Quiz Options</ReturnButton>
