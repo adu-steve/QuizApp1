@@ -1,0 +1,48 @@
+/* src/components/Toggle.css */
+
+.toggle-container {
+  background: var(--toggle-border);
+  border: 2px solid var(--toggle-border);
+  border-radius: 30px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 auto;
+  overflow: hidden;
+  padding: 0.5rem;
+  position: relative;
+  width: 5rem;
+  height: 2.5rem;
+  align-self: center;
+}
+
+.toggle-container.light {
+  --toggle-border: #ccc; /* Example light theme color */
+}
+
+.toggle-container.dark {
+  --toggle-border: #333; /* Example dark theme color */
+}
+
+.toggle-container svg {
+  height: auto;
+  width: 2.5rem;
+  transition: all 0.3s linear;
+}
+
+.toggle-container.light .toggle-svg-1 {
+  transform: translateY(0);
+}
+
+.toggle-container.dark .toggle-svg-1 {
+  transform: translateY(100px);
+}
+
+.toggle-container.light .toggle-svg-2 {
+  transform: translateY(-100px);
+}
+
+.toggle-container.dark .toggle-svg-2 {
+  transform: translateY(0);
+}

@@ -1,5 +1,6 @@
+// src/Quiz.tsx
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
+import "./Quiz.css"; // Import the external CSS file
 
 interface Question {
   question: string;
@@ -15,110 +16,6 @@ interface QuizProps {
   theme: "light" | "dark";
   onReturn: () => void;
 }
-
-const QuizContainer = styled.div<{ theme: string }>`
-  margin-top: 20px;
-  text-align: center;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 20px;
-  background-color: ${(props) => (props.theme === "dark" ? "#333" : "#f9f9f9")};
-  color: ${(props) => (props.theme === "dark" ? "#f9f9f9" : "#333")};
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-`;
-
-const QuestionContainer = styled.div`
-  margin-bottom: 20px;
-`;
-
-const OptionsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const OptionButton = styled.button<{
-  selected?: boolean;
-  highlighted?: boolean;
-  correct?: boolean;
-  wrong?: boolean;
-}>`
-  padding: 10px;
-  margin: 5px 0;
-  border: 1px solid #ddd;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: border 0.3s, background-color 0.3s;
-  background-color: ${(props) =>
-    props.highlighted ? "#e0e0e0" : props.selected ? "#9d53c3" : "white"};
-  border: ${(props) =>
-    props.correct
-      ? "4px solid #28a745"
-      : props.wrong
-      ? "4px solid #dc3545"
-      : "1px solid #ddd"};
-
-  &:hover {
-    background-color: #9d53c3;
-    border: 4px solid #9d53c3;
-  }
-`;
-
-const CorrectAnswerText = styled.p`
-  margin-top: 10px;
-  color: #28a745;
-  font-weight: bold;
-`;
-
-const ErrorMessage = styled.p`
-  margin-top: 10px;
-  color: #9d53c3;
-  font-weight: bold;
-`;
-
-const SubmitButton = styled.button`
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #9d53c3;
-  color: white;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.3s;
-
-  &:hover {
-    background-color: #0056b3;
-  }
-`;
-
-const QuizCompleted = styled.div`
-  text-align: center;
-  font-size: 18px;
-  font-weight: bold;
-`;
-
-const QuestionNumber = styled.div`
-  margin-bottom: 10px;
-  font-size: 14px;
-  color: #9d53c3;
-  font bold
-`;
-
-const ReturnButton = styled.button`
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #28a745;
-  color: white;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.3s;
-
-  &:hover {
-    background-color: #9d53c3;
-  }
-`;
 
 const Quiz: React.FC<QuizProps> = ({ quiz, theme, onReturn }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
@@ -177,15 +74,15 @@ const Quiz: React.FC<QuizProps> = ({ quiz, theme, onReturn }) => {
   };
 
   return (
-    <QuizContainer theme={theme}>
+    <div className={`quiz-container ${theme}`}>
       <h2>{quiz.title}</h2>
       {currentQuestion ? (
-        <QuestionContainer>
-          <QuestionNumber>
+        <div className="question-container">
+          <div className="question-number">
             Question {currentQuestionIndex + 1} of {quiz.questions.length}
-          </QuestionNumber>
+          </div>
           <h3>{currentQuestion.question}</h3>
-          <OptionsContainer>
+          <div className="options-container">
             {currentQuestion.options.map((option, index) => {
               const isSelected = selectedAnswer === option;
               const isHighlighted = index === highlightedOption;
@@ -194,44 +91,47 @@ const Quiz: React.FC<QuizProps> = ({ quiz, theme, onReturn }) => {
                 showResult && isSelected && option !== currentQuestion.answer;
 
               return (
-                <OptionButton
+                <button
                   key={index}
-                  selected={isSelected}
-                  highlighted={isHighlighted}
-                  correct={isCorrect}
-                  wrong={isWrong}
+                  className={`option-button ${isSelected ? "selected" : ""} ${
+                    isHighlighted ? "highlighted" : ""
+                  } ${isCorrect ? "correct" : ""} ${isWrong ? "wrong" : ""}`}
                   onClick={() => handleAnswerSelect(option)}
                   disabled={showResult}
                 >
                   {option}
-                </OptionButton>
+                </button>
               );
             })}
-          </OptionsContainer>
-          {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+          </div>
+          {errorMessage && <div className="error-message">{errorMessage}</div>}
           {showResult && selectedAnswer !== currentQuestion.answer && (
-            <CorrectAnswerText>
+            <div className="correct-answer-text">
               Correct answer: {currentQuestion.answer}
-            </CorrectAnswerText>
+            </div>
           )}
           {showResult ? (
-            <SubmitButton onClick={handleNextQuestion}>
+            <button className="submit-button" onClick={handleNextQuestion}>
               Next Question
-            </SubmitButton>
+            </button>
           ) : (
-            <SubmitButton onClick={handleSubmit}>Submit Answer</SubmitButton>
+            <button className="submit-button" onClick={handleSubmit}>
+              Submit Answer
+            </button>
           )}
-        </QuestionContainer>
+        </div>
       ) : (
-        <QuizCompleted>
+        <div className="quiz-completed">
           <h3>You've completed the quiz!</h3>
           <p style={{ color: "#9d53c3" }}>
             Your score: {score} out of {quiz.questions.length}
           </p>
-          <ReturnButton onClick={onReturn}>Return to Quiz Options</ReturnButton>
-        </QuizCompleted>
+          <button className="return-button" onClick={onReturn}>
+            Return to Quiz Options
+          </button>
+        </div>
       )}
-    </QuizContainer>
+    </div>
   );
 };
 
