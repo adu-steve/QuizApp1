@@ -1,7 +1,10 @@
 // src/Quiz.tsx
 import React, { useState, useEffect } from "react";
 import "./Quiz.css"; // Import the external CSS file
-
+import { ReactComponent as HtmlIcon } from "../assets/icon-html.svg";
+import { ReactComponent as CSSIcon } from "../assets/icon-css.svg";
+import { ReactComponent as JSIcon } from "../assets/icon-js.svg";
+import { ReactComponent as AccessIcon } from "../assets/icon-accessibility.svg";
 interface Question {
   question: string;
   options: string[];
@@ -65,6 +68,53 @@ const Quiz: React.FC<QuizProps> = ({ quiz, theme, onReturn }) => {
     }
   };
 
+  const getIcon = (title: string) => {
+    const iconColors = {
+      HTML: "#FFF1E9",
+      CSS: "#E0FDEF",
+      JavaScript: "#EBF0FF",
+      Accessibility: "#F6E7FF",
+    };
+
+    switch (title) {
+      case "HTML":
+        return (
+          <div
+            className="icon-box"
+            style={{ backgroundColor: iconColors.HTML }}
+          >
+            <HtmlIcon />
+          </div>
+        );
+      case "CSS":
+        return (
+          <div className="icon-box" style={{ backgroundColor: iconColors.CSS }}>
+            <CSSIcon />
+          </div>
+        );
+      case "JavaScript":
+        return (
+          <div
+            className="icon-box"
+            style={{ backgroundColor: iconColors.JavaScript }}
+          >
+            <JSIcon />
+          </div>
+        );
+      case "Accessibility":
+        return (
+          <div
+            className="icon-box"
+            style={{ backgroundColor: iconColors.Accessibility }}
+          >
+            <AccessIcon />
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
   const handleNextQuestion = () => {
     setSelectedAnswer("");
     setHighlightedOption(0);
@@ -75,50 +125,59 @@ const Quiz: React.FC<QuizProps> = ({ quiz, theme, onReturn }) => {
 
   return (
     <div className={`quiz-container ${theme}`}>
-      <h2>{quiz.title}</h2>
+      <h2>
+        {getIcon(quiz.title)}
+        {quiz.title}
+      </h2>
       {currentQuestion ? (
         <div className="question-container">
-          <div className="question-number">
-            Question {currentQuestionIndex + 1} of {quiz.questions.length}
-          </div>
-          <h3>{currentQuestion.question}</h3>
-          <div className="options-container">
-            {currentQuestion.options.map((option, index) => {
-              const isSelected = selectedAnswer === option;
-              const isHighlighted = index === highlightedOption;
-              const isCorrect = showResult && option === currentQuestion.answer;
-              const isWrong =
-                showResult && isSelected && option !== currentQuestion.answer;
-
-              return (
-                <button
-                  key={index}
-                  className={`option-button ${isSelected ? "selected" : ""} ${
-                    isHighlighted ? "highlighted" : ""
-                  } ${isCorrect ? "correct" : ""} ${isWrong ? "wrong" : ""}`}
-                  onClick={() => handleAnswerSelect(option)}
-                  disabled={showResult}
-                >
-                  {option}
-                </button>
-              );
-            })}
-          </div>
-          {errorMessage && <div className="error-message">{errorMessage}</div>}
-          {showResult && selectedAnswer !== currentQuestion.answer && (
-            <div className="correct-answer-text">
-              Correct answer: {currentQuestion.answer}
+          <div className="questions">
+            <div className="qtn-number">
+              Question {currentQuestionIndex + 1} of {quiz.questions.length}
             </div>
-          )}
-          {showResult ? (
-            <button className="submit-button" onClick={handleNextQuestion}>
-              Next Question
-            </button>
-          ) : (
-            <button className="submit-button" onClick={handleSubmit}>
-              Submit Answer
-            </button>
-          )}
+            <div className="question">{currentQuestion.question}</div>
+          </div>
+          <div className="optionsDiv">
+            <div className="options-container">
+              {currentQuestion.options.map((option, index) => {
+                const isSelected = selectedAnswer === option;
+                const isHighlighted = index === highlightedOption;
+                const isCorrect =
+                  showResult && option === currentQuestion.answer;
+                const isWrong =
+                  showResult && isSelected && option !== currentQuestion.answer;
+                const optionLetter = String.fromCharCode(65 + index);
+                return (
+                  <div
+                    key={index}
+                    className={`option-button ${isSelected ? "selected" : ""} ${
+                      isHighlighted ? "highlighted" : ""
+                    } ${isCorrect ? "correct" : ""} ${isWrong ? "wrong" : ""}`}
+                    onClick={() => handleAnswerSelect(option)}
+                  >
+                    <span>{optionLetter}</span>. {option}
+                  </div>
+                );
+              })}
+            </div>
+            {errorMessage && (
+              <div className="error-message">{errorMessage}</div>
+            )}
+            {showResult && selectedAnswer !== currentQuestion.answer && (
+              <div className="correct-answer-text">
+                Correct answer: {currentQuestion.answer}
+              </div>
+            )}
+            {showResult ? (
+              <div className="submit-button" onClick={handleNextQuestion}>
+                Next Question
+              </div>
+            ) : (
+              <div className="submit-button" onClick={handleSubmit}>
+                Submit Answer
+              </div>
+            )}
+          </div>
         </div>
       ) : (
         <div className="quiz-completed">

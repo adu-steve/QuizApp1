@@ -4,6 +4,10 @@ import { ReactComponent as HtmlIcon } from "../assets/icon-html.svg";
 import { ReactComponent as CSSIcon } from "../assets/icon-css.svg";
 import { ReactComponent as JSIcon } from "../assets/icon-js.svg";
 import { ReactComponent as AccessIcon } from "../assets/icon-accessibility.svg";
+import { ReactComponent as MoonDarkIcon } from "../assets/icon-moon-dark.svg";
+import { ReactComponent as MoonLightIcon } from "../assets/icon-moon-light.svg";
+import { ReactComponent as SunLightIcon } from "../assets/icon-sun-light.svg";
+import { ReactComponent as SunDarkIcon } from "../assets/icon-sun-dark.svg";
 
 import Quiz from "./Quiz";
 import data from "../data.json";
@@ -17,7 +21,7 @@ interface QuizData {
 
 const Frontend: React.FC = () => {
   const [selectedQuiz, setSelectedQuiz] = useState<QuizData | null>(null);
-  const [theme, setTheme] = useState<"light" | "dark">("dark");
+  const [theme, setTheme] = useState<"light" | "dark">("light");
 
   const handleQuizSelect = (quizIndex: number) => {
     setSelectedQuiz(data.quizzes[quizIndex]);
@@ -32,15 +36,47 @@ const Frontend: React.FC = () => {
   };
 
   const getIcon = (title: string) => {
+    const iconColors = {
+      HTML: "#FFF1E9",
+      CSS: "#E0FDEF",
+      JavaScript: "#EBF0FF",
+      Accessibility: "#F6E7FF",
+    };
+
     switch (title) {
       case "HTML":
-        return <HtmlIcon />;
+        return (
+          <div
+            className="icon-box"
+            style={{ backgroundColor: iconColors.HTML }}
+          >
+            <HtmlIcon />
+          </div>
+        );
       case "CSS":
-        return <CSSIcon />;
+        return (
+          <div className="icon-box" style={{ backgroundColor: iconColors.CSS }}>
+            <CSSIcon />
+          </div>
+        );
       case "JavaScript":
-        return <JSIcon />;
+        return (
+          <div
+            className="icon-box"
+            style={{ backgroundColor: iconColors.JavaScript }}
+          >
+            <JSIcon />
+          </div>
+        );
       case "Accessibility":
-        return <AccessIcon />;
+        return (
+          <div
+            className="icon-box"
+            style={{ backgroundColor: iconColors.Accessibility }}
+          >
+            <AccessIcon />
+          </div>
+        );
       default:
         return null;
     }
@@ -48,10 +84,21 @@ const Frontend: React.FC = () => {
 
   return (
     <div className={`app-container ${theme}`}>
-      <div className="theme-toggle" onClick={toggleTheme}>
-        <span style={{ marginLeft: "10px" }}>
-          Toggle {theme === "dark" ? "Light" : "Dark"} Theme
-        </span>
+      <div className="theme-Div">
+        <div className="theme-icon">
+          {theme === "dark" ? <SunLightIcon /> : <SunDarkIcon />}
+        </div>
+        <label className="switch">
+          <input
+            type="checkbox"
+            className="toggle-btn"
+            onClick={toggleTheme}
+          ></input>
+          <span className="slider round"></span>
+        </label>
+        <div className="theme-icon">
+          {theme === "dark" ? <MoonLightIcon /> : <MoonDarkIcon />}
+        </div>
       </div>
 
       {selectedQuiz ? (
@@ -72,7 +119,7 @@ const Frontend: React.FC = () => {
           <div className="card-container">
             <div className="cards">
               {data.quizzes.map((quiz, index) => (
-                <button
+                <div
                   key={index}
                   className={`card ${theme}`}
                   onClick={() => handleQuizSelect(index)}
@@ -81,9 +128,9 @@ const Frontend: React.FC = () => {
                     fontWeight: "bold",
                   }}
                 >
-                  {getIcon(quiz.title)}
+                  <div className="card-icon">{getIcon(quiz.title)}</div>
                   <span style={{ marginLeft: "10px" }}>{quiz.title}</span>
-                </button>
+                </div>
               ))}
             </div>
           </div>

@@ -1,6 +1,5 @@
-// src/components/Toggle.tsx
 import React from "react";
-import "./Toggle.css"; // Import the external CSS file
+import "./Toggle.css";
 
 interface ToggleProps {
   theme: "light" | "dark";

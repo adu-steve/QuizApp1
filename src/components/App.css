@@ -1,4 +1,8 @@
-/* src/App.css */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 .app-container {
   display: flex;
@@ -14,13 +18,21 @@ h3 {
 }
 
 .app-container.light {
-  background-color: #f4f6fa;
+  background-image: url(../assets/pattern-background-desktop-light.svg);
   color: #313e51;
+  background-size: cover;
+  background-color: #f4f6fa;
 }
 
 .app-container.dark {
-  background-color: #313e51;
+  background-image: url(../assets/pattern-background-desktop-dark.svg);
   color: #ffffff;
+  background-size: cover;
+  background-color: #313e51;
+}
+
+.app-container.light .title-container {
+  color: #313e51;
 }
 
 .header {
@@ -70,7 +82,6 @@ h3 {
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  text-align: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s;
   width: 30rem;
@@ -94,25 +105,6 @@ h3 {
   background-color: #e0e0e0;
 }
 
-.theme-toggle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #9d53c3;
-  color: white;
-  padding: 5px 10px;
-  margin-top: 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  font-size: 14px;
-  align-self: center;
-}
-
-.theme-toggle:hover {
-  background-color: #0056b3;
-}
-
 .main-content {
   flex-grow: 1;
   display: flex;
@@ -121,4 +113,89 @@ h3 {
   justify-content: center;
   padding: 20px;
   margin: 50px;
+}
+
+.icon-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  width: 40px;
+  height: 40px;
+  border-radius: 10%;
+}
+
+.icon-box svg {
+  width: 30px;
+  height: 30px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 3.5rem;
+  height: 1.9rem;
+}
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.switch input:checked + .slider {
+  background-color: #a729f5;
+}
+.switch input:focus + .slider {
+  box-shadow: 0 0 1px #a729f5;
+}
+.switch input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+.switch .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #a729f5;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+.switch .slider:before {
+  position: absolute;
+  content: "";
+  height: 1.4rem;
+  width: 1.5rem;
+  left: 4px;
+  bottom: 4px;
+  background-color: #fff;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+.switch .slider.round {
+  border-radius: 34px;
+}
+.switch .slider.round:before {
+  border-radius: 50%;
+}
+
+.theme-Div {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: 10rem;
+  margin-left: 50rem;
+}
+
+.theme-icon {
+  margin: 10px;
 }
